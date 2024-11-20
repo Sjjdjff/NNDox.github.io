@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск по Reveng</title>
+    <!-- Подключаем шрифт Poppins с Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Подключаем шрифт с Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Основной стиль для страницы */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Стиль для заголовка */
+        h1 {
+            font-family: 'Poppins', sans-serif;  /* Применяем шрифт Poppins */
+            color: #000000;  /* Черный цвет для текста */
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+            background: -webkit-linear-gradient(45deg, #ff7bc1, #3f7af7);
+            -webkit-background-clip: text;
+            color: transparent; /* Оставляем только градиент на тексте */
+            animation: gradientAnimation 5s ease infinite;
+            text-shadow: none;  /* Убираем тень для нормального отображения текста */
+        }
+
+        /* Градиент для текста с анимацией */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Стиль для поля ввода */
+        input[type="text"] {
+            padding: 10px;
+            font-size: 18px;
+            width: 300px;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Стиль для кнопки */
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #3f7af7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Эффект при наведении на кнопку */
+        button:hover {
+            background-color: #ff7bc1;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>Поиск по Reveng</h1>
+        <form method="POST">
+            <input type="text" name="query" placeholder="Введите запрос" required>
+            <button type="submit">Поиск</button>
+        </form>
+    </div>
+
+</body>
+</html>
