@@ -76,17 +76,61 @@
         button:hover {
             background-color: #ff7bc1;
         }
+
+        /* Стиль для блока с результатами */
+        .results {
+            margin-top: 20px;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
 
     <div>
         <h1>Поиск по Reveng</h1>
-        <form method="POST">
-            <input type="text" name="query" placeholder="Введите запрос" required>
+        <form id="searchForm">
+            <input type="text" name="query" id="query" placeholder="Введите запрос" required>
             <button type="submit">Поиск</button>
         </form>
+        <div class="results" id="results"></div>
     </div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Предотвращаем отправку формы
+
+            let query = document.getElementById('query').value;  // Получаем значение из поля ввода
+
+            // Проверка, если поле пустое
+            if (query.trim() === '') {
+                alert('Пожалуйста, введите запрос!');
+                return;
+            }
+
+            // Отправка запроса на сервер через AJAX
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Обновляем блок с результатами
+                let resultsDiv = document.getElementById('results');
+                if (data.results && data.results.length > 0) {
+                    resultsDiv.innerHTML = '<ul>' + data.results.map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join('') + '</ul>';
+                } else {
+                    resultsDiv.innerHTML = 'Ничего не найдено.';
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при поиске.');
+            });
+        });
+    </script>
 
 </body>
 </html>
