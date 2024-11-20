@@ -7,6 +7,9 @@
     <!-- Подключаем шрифт Poppins с Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* Подключаем шрифт с Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         /* Основной стиль для страницы */
         body {
             font-family: 'Poppins', sans-serif;
@@ -22,16 +25,16 @@
 
         /* Стиль для заголовка */
         h1 {
-            font-family: 'Poppins', sans-serif;
-            color: #000000;
+            font-family: 'Poppins', sans-serif;  /* Применяем шрифт Poppins */
+            color: #000000;  /* Черный цвет для текста */
             text-align: center;
             font-size: 36px;
             margin-bottom: 30px;
             background: -webkit-linear-gradient(45deg, #ff7bc1, #3f7af7);
             -webkit-background-clip: text;
-            color: transparent;
+            color: transparent; /* Оставляем только градиент на тексте */
             animation: gradientAnimation 5s ease infinite;
-            text-shadow: none;
+            text-shadow: none;  /* Убираем тень для нормального отображения текста */
         }
 
         /* Градиент для текста с анимацией */
@@ -73,82 +76,17 @@
         button:hover {
             background-color: #ff7bc1;
         }
-
-        /* Стиль для отображения данных */
-        .results {
-            margin-top: 20px;
-            text-align: left;
-            font-size: 16px;
-        }
-
-        .links-list {
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .links-list a {
-            color: #3f7af7;
-            text-decoration: none;
-        }
-
-        .links-list a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
 
     <div>
         <h1>Поиск по Reveng</h1>
-        <input type="text" id="query" placeholder="Введите запрос" required>
-        <button onclick="performSearch()">Поиск</button>
-
-        <div id="results" class="results"></div>
+        <form method="POST">
+            <input type="text" name="query" placeholder="Введите запрос" required>
+            <button type="submit">Поиск</button>
+        </form>
     </div>
-
-    <script>
-        // Функция для очистки данных (оставляем только буквы и цифры)
-        function cleanData(data) {
-            return data.replace(/\W/g, '');  // Оставляем только буквы и цифры
-        }
-
-        // Функция для выполнения поиска
-        function performSearch() {
-            let query = document.getElementById('query').value;
-            let cleanedData = cleanData(query);
-
-            // URL для поиска на сайте
-            let searchUrl = `https://reveng.ee/search?q=${encodeURIComponent(query)}&per_page=100`;
-
-            // Отправка запроса на сайт
-            fetch(searchUrl)
-                .then(response => response.text())
-                .then(html => {
-                    // Разбираем HTML-контент с помощью DOMParser
-                    let parser = new DOMParser();
-                    let doc = parser.parseFromString(html, 'text/html');
-
-                    // Ищем все ссылки, содержащие 'entity' в href
-                    let links = Array.from(doc.querySelectorAll('a[href*="entity"]')).map(a => 'https://reveng.ee' + a.href);
-
-                    // Убираем повторяющиеся ссылки
-                    links = [...new Set(links)];
-
-                    // Отображаем результаты
-                    let resultsDiv = document.getElementById('results');
-                    resultsDiv.innerHTML = `<h3>Результаты для: ${cleanedData}</h3>`;
-
-                    let linksList = document.createElement('div');
-                    linksList.innerHTML = `<h4>Ссылки:</h4><ul>${links.map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join('')}</ul>`;
-                    resultsDiv.appendChild(linksList);
-                })
-                .catch(error => {
-                    console.error('Ошибка при выполнении запроса:', error);
-                    document.getElementById('results').innerHTML = 'Произошла ошибка при выполнении поиска.';
-                });
-        }
-    </script>
 
 </body>
 </html>
