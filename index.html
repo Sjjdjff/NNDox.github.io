@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Неоновый текст с матрицей</title>
+    <style>
+        body {
+            background-color: #111;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .neon-text {
+            font-size: 3rem;
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00, 0 0 25px #00ff00, 0 0 30px #00ff00;
+            z-index: 10;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+
+    <div class="neon-text">
+        ПРИВЕТ!<br>
+        Это мануал по пробиву<br>
+        Введение:<br>
+        Многие хотели найти информацию о другом человеке или снести ему аккаут, сейчас я раскажу как это сделать<br>
+        Инструменты:<br>
+        Вам наверное расказывали что телеграм ботам пользуются только е****ты, но это не так, боты это одни из лучших инструментов для пробива, вот некоторые из них<br>
+        Глаз Бога: платный бот, очень много баз тг, по юзернейму даст номер телефона<br>
+        LeakOsint: платный бот, даётся бесплатная подписка на неделю, очень много баз<br>
+        Vektorbot: бесплатный бот, очень много баз данных но только по россии, 25 запросов в день<br>
+        Wizardbot: беслпатный бот, даст по номеру телефона город<br>
+        VKHistory: бесплатный бот, по айди вк даст историю аккаунта, может выдать номер телефона<br>
+        Aminfobot: бесплтаный бот, 7 запросов в день мало баз<br>
+        phonebook: бесплатный бот, немало баз<br>
+        Вывод:<br>
+        Если ктото обсирает ботов, то просто пробей его этими же ботами
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = "01";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff00';
+            ctx.font = `${fontSize}px monospace`;
+
+            drops.forEach((y, i) => {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                const x = i * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            });
+        }
+
+        setInterval(drawMatrix, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
